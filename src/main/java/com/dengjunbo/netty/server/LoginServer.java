@@ -28,13 +28,10 @@ public class LoginServer {
         bind(serverBootstrap,8080);
     }
     private static void bind(final ServerBootstrap serverBootstrap,final int port){
-        serverBootstrap.bind(port).addListener(new GenericFutureListener<Future<? super Void>>() {
-            @Override
-            public void operationComplete(Future<? super Void> future) throws Exception {
-                if (future.isSuccess()){
-                    System.out.println(new Date()+"端口["+port+"]开始监听");
-                }else bind(serverBootstrap,port+1);
-            }
+        serverBootstrap.bind(port).addListener(future -> {
+            if (future.isSuccess()){
+                System.out.println(new Date()+"端口["+port+"]开始监听");
+            }else bind(serverBootstrap,port+1);
         });
     }
 }
